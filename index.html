@@ -6,25 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>lzt</title>
     <link rel="stylesheet" href="css/index.css" />
-    <script src="https://cdn.jsdelivr.net/gh/itjoker233/Gridea-theme-Chic@latest/assets/media/script/APlayer.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css">
+    <!-- <script src="https://cdn.jsdelivr.net/gh/itjoker233/Gridea-theme-Chic@latest/assets/media/script/APlayer.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css"> -->
     <link rel="icon" href="https://cdn.jsdelivr.net/gh/lztttt/pic/img/202111192139183.svg" />
     <script src="https://cdn.jsdelivr.net/npm/meting@2.0.1/dist/Meting.min.js"></script>
+    <!-- <link href="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.css" rel="stylesheet">
     <link href="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.css" rel="stylesheet">
-    <link href="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.css" rel="stylesheet">
-    <script src="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.js"></script>
-    <style>
-        .demo {
-            width: 360px;
-            margin: 60px auto 10px auto
-        }
-        
-        .demo p {
-            padding: 10px 0
-        }
-    </style>
+  <script src="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.js"></script> -->
 
-    <script src="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.js"></script>
+
+    <!-- <script src="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.js"></script> -->
 </head>
 
 <body>
@@ -32,7 +23,7 @@
         body {
             margin: 0;
         }
-        
+
         ul.topnav {
             list-style-type: none;
             margin: 0;
@@ -40,11 +31,11 @@
             overflow: hidden;
             background-color: rgba(245, 255, 226, 0.377);
         }
-        
+
         ul.topnav li {
             float: left;
         }
-        
+
         ul.topnav li a {
             display: block;
             color: rgb(0, 0, 0);
@@ -52,31 +43,32 @@
             padding: 14px 16px;
             text-decoration: none;
         }
-        
+
         ul.topnav li a:hover:not(.active) {
             background-color: rgba(13, 148, 211, 0.479);
         }
-        
+
         ul.topnav li a.active {
             background-color: #ffddca96;
         }
-        
+
         ul.topnav li.right {
             float: right;
         }
-        
+
         @media screen and (max-width: 600px) {
+
             ul.topnav li.right,
             ul.topnav li {
                 float: none;
             }
         }
-        
+
         .dropdown {
             position: relative;
             display: inline-block;
         }
-        
+
         .dropdown-content {
             display: none;
             position: absolute;
@@ -86,11 +78,11 @@
             padding: 12px 16px;
             z-index: 1;
         }
-        
+
         .dropdown:hover .dropdown-content {
             display: block;
         }
-        
+
         .button {
             background-color: #b8e5fa;
             border: none;
@@ -103,8 +95,67 @@
             margin: 4px 2px;
             cursor: pointer;
         }
+
+        main {
+            text-align: center;
+            max-width: 800px;
+            margin-right: auto;
+            margin-left: auto;
+        }
+
+        .cards {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            margin: -1rem;
+            list-style: none;
+        }
+
+        @media (min-width: 600px) {
+            .cards {
+                flex-direction: row;
+            }
+        }
+
+        /* 简介卡片部分style */
+        .card {
+            text-align: center;
+            flex: 1;
+            margin: 1rem;
+            padding: 1rem;
+            background-color: rgb(174, 243, 237);
+            border-radius: 5rem;
+            box-shadow: 3rem rgba(104, 28, 226, 0.1);
+        }
+
+        h2 {
+            text-shadow: 2px 2px 2px rgb(0, 255, 98);
+        }
+
+        .card * {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .card--image {
+            text-align: center;
+            font-size: 6rem;
+            line-height: 1;
+        }
+
+        .card.-red .card--image {
+            color: #ffd380;
+        }
+
+        .card.-green .card--image {
+            color: #80c080;
+        }
+
+        .card.-blue .card--image {
+            color: #80c2ff;
+        }
     </style>
-    <!-- 导航栏 -->
+    <!-- 导航栏
     <ul class="topnav">
         <li><a class="active" href="./index.html">LZT</a></li>
 
@@ -112,68 +163,36 @@
         <li><a href="/about">关于</a></li>
         <li><a href="https://cdn.jsdelivr.net/gh/lztttt/cloud@1/">文件</a></li>
 
-        <!-- 天气窗口 -->
+      天气窗口
         <li>
             <a>
                 <iframe width="290" scrolling="no" height="19
                 " frameborder="0" allowtransparency="true" src="https://i.tianqi.com?c=code&id=34&icon=1&site=15"></iframe></a>
         </li>
-    </ul>
+    </ul> -->
 
 
+    <!-- 简介卡片1 -->
+    <main>
+        <ul class="cards">
 
+            <li class="card -green">
 
+                <h2>Welcome</h2>
+                这里是网站首页
+正在重构，敬请期待
+            </li>
+
+        </ul>
+    </main>
 
 
     <!-- 按钮部分 -->
 
     <div class="container">
 
-        <div class="box">
-            <div class="img">
-                <a target=blank href="https://lztttt.github.io/tool/study">
-                    <img src="https://cdn.jsdelivr.net/gh/lztttt/pic/img/202111192135052.svg" />
-                </a>
-            </div>
-            <p>tool</p>
-        </div>
-
-        <div class="box">
-            <div class="img">
-                <a target=blank href="https://lztttt.github.io/blog">
-                    <img src="https://cdn.jsdelivr.net/gh/lztttt/pic/img/202111192135052.svg" />
-                </a>
-            </div>
-            <p>blog</p>
-        </div>
-
-        <div class="box">
-            <div class="img">
-                <a target=blank href="https://lztttt.github.io/u/zy">
-                    <img src="https://cdn.jsdelivr.net/gh/lztttt/pic/img/202111192135052.svg" />
-                </a>
-            </div>
-            <p>zy</p>
-        </div>
-
-        <div class="box">
-            <div class="img">
-                <a target=blank href="https://lztttt.github.io/u">
-                    <img src="https://cdn.jsdelivr.net/gh/lztttt/pic/img/202111192135052.svg" />
-                </a>
-            </div>
-            <p>u</p>
-        </div>
 
 
-        <div class="box">
-            <div class="img">
-                <a target=blank href="https://lztttt.github.io/tool/Music">
-                    <img src="https://cdn.jsdelivr.net/gh/lztttt/pic/img/202111192135052.svg" />
-                </a>
-            </div>
-            <p>Music</p>
-        </div>
 
         <div class="box">
             <div class="img">
@@ -184,6 +203,7 @@
             <p>game</p>
         </div>
 
+
         <!-- music -->
 
         <!-- <meting-js server="netease" type="playlist" id="5260535564"></meting-js> -->
@@ -191,9 +211,10 @@
         <!-- <meting-js server="netease" type="artist" id="5781"></meting-js>
         <meting-js server="tencent" type="album" id="003k3pNG0KpRVI"></meting-js>
         <meting-js server="tencent" type="album" mini="true" id="003k3pNG0KpRVI"></meting-js>
-        <meting-js server="tencent" type="album" list-folded="true" id="003k3pNG0KpRVI"></meting-js> -->
+        <meting-js server="tencent" type="album" list-folded="true" id="003k3pNG0KpRVI"></meting-js>
         <meting-js preload="none" server="netease" type="playlist" id="5373479168">
         </meting-js>
 
+ -->
 
 </html>
