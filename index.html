@@ -1,187 +1,122 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html>
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Dmego Home">
+    <meta name="keywords" content="Dmego,Homepage">
+    <meta name="author" content="Dmego">
     <title>lzt</title>
-    <link rel="stylesheet" href="css/index.css" />
-    <!-- <script src="https://cdn.jsdelivr.net/gh/itjoker233/Gridea-theme-Chic@latest/assets/media/script/APlayer.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css"> -->
-    <link rel="icon" href="https://cdn.jsdelivr.net/gh/lztttt/pic/img2022/1 (2).svg" />
-    <script src="https://cdn.jsdelivr.net/npm/meting@2.0.1/dist/Meting.min.js"></script>
-    <!-- <link href="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.css" rel="stylesheet">
-    <link href="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.css" rel="stylesheet">
-  <script src="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.js"></script> -->
-  <meta name =“description” content =“lztttt” />
-  <meta name =“keywords” content =“lztttt” />
-    <!-- <script src="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.js"></script> -->
+    <!-- <link rel="stylesheet" type="text/css" href="https://unpkg.com/dmego-home-page/assets/css/onlinewebfonts.css"/>
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/dmego-home-page/assets/css/vno.css">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/dmego-home-page/assets/css/iconfont.css">
+     -->
+    <link rel="stylesheet" type="text/css" href="./assets/css/onlinewebfonts.css"/>
+    <link rel="stylesheet" type="text/css" href="./assets/css/vno.css">
+    <link rel="stylesheet" type="text/css" href="./assets/css/iconfont.css">
+    <link rel="apple-touch-icon" href="https://test1.jsdelivr.net/gh/lztttt/pic/img2022/202206261505403.jpg">
 </head>
 
 <body>
-    <style>
-        body {
-            margin: 0;
-        }
-
-        ul.topnav {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            background-color: rgba(245, 255, 226, 0.377);
-        }
-
-        ul.topnav li {
-            float: left;
-        }
-
-        ul.topnav li a {
-            display: block;
-            color: rgb(0, 0, 0);
-            text-align: center;
-            padding: 14px 16px;
-            text-decoration: none;
-        }
-
-        ul.topnav li a:hover:not(.active) {
-            background-color: rgba(13, 148, 211, 0.479);
-        }
-
-        ul.topnav li a.active {
-            background-color: #dda38296;
-        }
-
-        ul.topnav li.right {
-            float: right;
-        }
-
-        @media screen and (max-width: 600px) {
-
-            ul.topnav li.right,
-            ul.topnav li {
-                float: none;
-            }
-        }
-
-        .dropdown {
-            position: relative;
-            display: inline-block;
-        }
-
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #f9f9f9;
-            min-width: 160px;
-            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-            padding: 12px 16px;
-            z-index: 1;
-        }
-
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
-
-        .button {
-            background-color: #b8e5fa;
-            border: none;
-            color: white;
-            padding: 15px 32px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 4px 2px;
-            cursor: pointer;
-        }
-
-        .text{
-            color: rgb(0, 0, 0);
-            text-align: center;
-            padding: 14px 16px;
-            text-decoration: none;
-            background-color: rgba(166, 216, 250, 0.856);
-            text-shadow: 1em;
-            text-shadow: ;
-        }
-
-       
-    </style>
-    <!-- 导航栏
-    <ul class="topnav">
-        <li><a class="active" href="./index.html">LZT</a></li>
-
-        <li><a href="/mark">书签</a></li>
-        <li><a href="/about">关于</a></li>
-        <li><a href="https://cdn.jsdelivr.net/gh/lztttt/cloud@1/">文件</a></li>
-
-      天气窗口
-        <li>
-            <a>
-                <iframe width="290" scrolling="no" height="19
-                " frameborder="0" allowtransparency="true" src="https://i.tianqi.com?c=code&id=34&icon=1&site=15"></iframe></a>
-        </li>
-    </ul> -->
-
-
-    <!-- 简介卡片1 -->
-        <div class="text">
-
-
-                <h2>Hi</h2>
-                <!-- 这里是网站首页
-                正在重构，敬请期待 -->
-
-        </div>
-
-
-    <!-- 按钮部分 -->
-
-    <div class="container">
-
-
-
-        <!-- <div class="box">
-            <div class="img">
-                <a target=blank href="https://lztttt.github.io/tool/game">  
-                <img src="https://cdn.jsdelivr.net/gh/lztttt/pic/img2022/网页代码,网页程序.svg" />  
-                </a>
+    <span class="mobile btn-mobile-menu">
+        <i class="social iconfont icon-list btn-mobile-menu__icon"></i>
+        <i class="social iconfont icon-angleup btn-mobile-close__icon hidden"></i>
+    </span>
+    <header id="panel" class="panel-cover">
+        <div class="panel-main">
+            <div class="panel-main__inner panel-inverted">
+                <div class="panel-main__content">
+                    <div class="ih-item circle effect right_to_left">            
+                        <a href="#" title="" class="blog-button">
+                            <div class="img"><img src="https://test1.jsdelivr.net/gh/lztttt/pic/img2022/202206261505403.jpg" alt="img" class="js-avatar iUp profilepic"></div>
+                            <div class="info iUp">
+                                <div class="info-back">
+                                    <h2> 
+                                        
+                                        lzt
+                                        
+                                    </h2>
+                                    <p>
+                                        
+                                            2022 
+                                        
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <h1 class="panel-cover__title panel-title iUp">
+                        <a href="#" title="Dmego Home">LZT</a>
+                    </h1>
+                    <p class="panel-cover__subtitle panel-subtitle iUp">hi</p>
+                    <hr class="panel-cover__divider iUp" />
+                    <p id="description" class="panel-cover__description iUp">
+                        <br/>
+                        <strong></strong>
+                    </p>
+                    <div class="navigation-wrapper iUp">
+                        <div>
+                            <nav class="cover-navigation cover-navigation--primary">
+                                <ul class="navigation">
+                                    <!-- <li class="navigation__item">
+                                        <a href="/" class="blog-button">首页</a>
+                                    </li> -->
+                                    <li class="navigation__item">
+                                        <a href="http://lztt.cf/" class="blog-button" target="_blank">博客</a>
+                                    </li>
+                                    <li class="navigation__item">
+                                        <a href="http://5738.ml" class="blog-button" target="_blank">PCBS 跑分计算器
+                                        </a>
+                                    </li>
+                                    <li class="navigation__item">
+                                        <a href="http://lztt.gq/" class="blog-button" target="_blank">网盘</a>
+                                    </li>
+                                    <li class="navigation__item">
+                                        <a href="http://lztttt.ysepan.com/" class="blog-button" target="_blank">小网盘</a>
+                                    </li>
+                                    
+                                    <li class="navigation__item">
+                                        <a href="https://lztttt.tk/tool/talk1/" class="blog-button" target="_blank">留言</a>
+                                    </li>
+                                   
+                                </ul>
+                            </nav>
+                        </div>
+                        <div class="iUp">
+                            <nav class="cover-navigation navigation--social">
+                                <ul class="navigation">
+                                    <li class="navigation__item">
+                                        <a href="https://github.com/lztttt/" title="github" target="_blank">
+                                            <i class='social iconfont icon-github'></i>
+                                            <span class="label">github</span>
+                                        </a>
+                                    </li>
+                                    <li class="navigation__item">
+                                        <a href="mailto:1975677818@qq.com" title="email">
+                                            <i class='social iconfont icon-email'></i>
+                                            <span class="label">email</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <p>game</p>
-        </div> -->
-
-
-        <!-- <div class="box"><div class="img"><a target=blank href="https://github.com/"><img src="https://cdn.jsdelivr.net/gh/lztttt/pic/img2022/github (1).svg" /></a></div><p>GitHub</p></div> -->
-
-        <!-- <div class="box"><div class="img"><a target=blank href="https://www.bilibili.com/"><img src="https://cdn.jsdelivr.net/gh/lztttt/pic/img2022/bilibili.svg" /></a></div><p>Bilibili</p></div> -->
-
-        <div class="box"><div class="img"><a target=blank href="http://lztttt.ysepan.com/"><img src="https://cdn.jsdelivr.net/gh/lztttt/pic/img2022/网页代码,网页程序.svg" /></a></div><p>小网盘</p></div>
-
-        <div class="box"><div class="img"><a target=blank href="https://lztttt.tk/pbs/"><img src="https://cdn.jsdelivr.net/gh/lztttt/pic/img2022/网页代码,网页程序.svg" /></a></div><p>装机模拟器工具</p></div>
-
-        <div class="box"><div class="img"><a target=blank href="https://lztttt.tk/bookmark"><img src="https://cdn.jsdelivr.net/gh/lztttt/pic/img2022/网页代码,网页程序.svg" /></a></div><p>我的书签</p></div>
-       
-
-
-        <!-- <meting-js server=" netease" type="playlist" id="5260535564"></meting-js> -->
-        <!-- <meting-js server="netease" type="album" id="3154175"></meting-js> -->
-        <!-- <meting-js server="netease" type="artist" id="5781"></meting-js>
-        <meting-js server="tencent" type="album" id="003k3pNG0KpRVI"></meting-js>
-        <meting-js server="tencent" type="album" mini="true" id="003k3pNG0KpRVI"></meting-js>
-        <meting-js server="tencent" type="album" list-folded="true" id="003k3pNG0KpRVI"></meting-js>
-        <meting-js preload="none" server="netease" type="playlist" id="5373479168">
-        </meting-js>
-
- -->
-<div class="footer"
-    style="position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    background-color: #e8f6fa;
-    text-align: center;">
-
-    <p>2022  lztttt   <a href="https://lztt.ml/b"   >后台管理</a></p>
-         
+            <div class="panel-cover--overlay cover-slate"></div>
+        </div>
+        <div class="remark iUp">
+            <p class="power">
+                <a href="https://lztt.ml/b" target="_blank">后台</a>
+           
+            </p>
+        </div>
+    </header>
+    <script type="text/javascript" src="./assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="./assets/js/main.js"></script>
+    <script type="text/javascript" src="./assets/json/images.json?cb=getBingImages"></script>
+</body>
 </html>
