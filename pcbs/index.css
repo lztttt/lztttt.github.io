@@ -1,0 +1,577 @@
+
+        body {
+            background-color: #000000;
+            color: white;
+            font-family: Arial;
+            font-size: 20px;
+        }
+
+        #divNavigationBar {
+            background-color: #000000;
+            color: white;
+            width: 100%;
+            height: 40px;
+            position: fixed;
+            top: 0;
+            text-align: center;
+        }
+
+        .tdNavigationBar {
+            background-color: #000066;
+            list-style: none;
+            display: inline-block;
+            padding: 8px 8px 8px 8px;
+            border-left: 1px solid;
+            border-right: 1px solid;
+            border-bottom: 1px solid;
+            border-top: 1px solid;
+            margin-left: -7px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        #divOptions {
+            background-color: #000066;
+            height: 40px;
+            color: white;
+            width: 370px;
+            margin: auto;
+            padding: 32px 0px 0px 0px;
+            border: 1px solid;
+            border-bottom: 0px solid;
+        }
+
+        #tableOptions {
+            border: none;
+            padding: 0px;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+            #tableOptions td {
+                padding: 0px;
+            }
+
+                #tableOptions td.tdOptionHemLabel {
+                    width: 320px;
+                }
+
+                #tableOptions td.tdOptionHemCheckbox {
+                    width: 25px;
+                }
+
+                #tableOptions td.tdOptionPartsNotInShopLabel {
+                    width: 320px;
+                }
+
+                #tableOptions td.tdOptionPartsNotInShopCheckbox {
+                    width: 25px;
+                }
+
+        #divLevel {
+            background-color: #000066;
+            height: 28px;
+            color: white;
+            width: 430px;
+            margin: auto;
+            padding: 0px 0px 0px 0px;
+            border: 1px solid;
+            border-top: 1px solid;
+            text-align: center;
+        }
+
+        #tableLevel {
+            border: none;
+            padding: 0px;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+            #tableLevel td {
+                padding: 2px;
+            }
+
+                #tableLevel td.tdOptionAllPartsUnlockedLabel {
+                    width: 125px;
+                }
+
+                #tableLevel td.tdOptionAllPartsUnlockedCheckbox {
+                    width: 25px;
+                }
+
+                #tableLevel td.tdLevelLabel {
+                    width: 88px;
+                }
+
+                #tableLevel td.tdLevelValue {
+                    width: 40px;
+                }
+
+                #tableLevel td.tdLevelPercentThroughLabel {
+                    width: 76px;
+                }
+
+                #tableLevel td.tdLevelPercentThroughValue {
+                    width: 40px;
+                }
+
+        #div3DMarkScoreCalculator {
+            display: block;
+        }
+
+        #divBuildMaker {
+            display: none;
+        }
+
+        #divBuildUpgrader {
+            display: none;
+        }
+
+        #divPartReplacer {
+            display: none;
+        }
+
+        #divHistoryAndSaves {
+            display: none;
+        }
+
+        #divPages {
+            background-color: #000000;
+            text-align: center;
+            font-size: 12px;
+            font-weight: bold;
+            padding-top: 10px;
+        }
+
+        input {
+            border-radius: 0px 0px 0px 0px;
+            height: 25px;
+            width: 400px;
+        }
+
+            input.bigCheckbox {
+                width: 400px;
+            }
+
+            input.optionCheckbox {
+                height: auto;
+                width: auto;
+            }
+
+            input.levelText {
+                height: auto;
+                width: 30px;
+            }
+
+        button {
+            font-size: 16px;
+            padding: 2px 5px 2px 5px;
+        }
+
+        caption {
+            color: white;
+            font-size: 25px;
+            font-weight: bold;
+            padding-bottom: 10px;
+        }
+
+        select {
+            border-radius: 0px 0px 0px 0px;
+            height: 25px;
+            width: 400px;
+        }
+
+        #div3DMarkScoreCalculatorForm {
+            background-color: #000066;
+            color: white;
+            width: 600px;
+            margin: auto;
+            padding: 15px 20px;
+        }
+
+        #divBuildMakerForm {
+            background-color: #000066;
+            color: white;
+            width: 600px;
+            margin: auto;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+        }
+
+        #tableBuildMakerResults {
+            border: none;
+            padding: 8px;
+            border-collapse: collapse;
+            margin: auto;
+            font-size: 15px;
+        }
+
+            #tableBuildMakerResults td {
+                background-color: black;
+                color: white;
+                border: 1px solid;
+                padding: 5px;
+            }
+
+                #tableBuildMakerResults td.tdCase {
+                    background-color: #450045;
+                }
+
+                #tableBuildMakerResults td.tdCpu {
+                    background-color: #003A00;
+                }
+
+                #tableBuildMakerResults td.tdramChannel {
+                    background-color: #54280B;
+                    text-align: center;
+                    padding: 0px 12px 0px 12px;
+                }
+
+                #tableBuildMakerResults td.tdRamSpeed {
+                    background-color: #54280B;
+                    text-align: center;
+                }
+
+                #tableBuildMakerResults td.tdRamPart {
+                    background-color: #54280B;
+                }
+
+                #tableBuildMakerResults td.tdGpuCount {
+                    background-color: #00003F;
+                    text-align: center;
+                    padding: 0px 12px 0px 12px;
+                }
+
+                #tableBuildMakerResults td.tdGpuType {
+                    background-color: #00003F;
+                    text-align: center;
+                }
+
+                #tableBuildMakerResults td.tdGpuPart {
+                    background-color: #00003F;
+                }
+
+                #tableBuildMakerResults td.tdMobo {
+                    background-color: #4C0000
+                }
+
+                #tableBuildMakerResults td.tdPrice {
+                    background-color: #004C00;
+                    text-align: center;
+                }
+
+                #tableBuildMakerResults td.tdScore {
+                    background-color: #442266;
+                    text-align: center;
+                }
+
+                #tableBuildMakerResults td.tdOther {
+                    background-color: black;
+                    text-align: center;
+                }
+
+            #tableBuildMakerResults button.buttonSave {
+                font-size: 12px;
+                padding: 0px 0px 0px 0px;
+            }
+
+        #divBuildMakerSaveForm {
+            top: 40%;
+            left: 40%;
+            position: absolute;
+            background-color: white;
+            z-index: 2;
+            border: 5px 5px 5px 5px;
+            height: 100px;
+            width: 350px;
+            padding: 20px 20px;
+            display: none;
+        }
+
+        #divBuildUpgraderForm {
+            background-color: #000066;
+            color: white;
+            margin: auto;
+            width: 600px;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+        }
+
+        #tableBuildUpgraderResults {
+            border: none;
+            padding: 8px;
+            border-collapse: collapse;
+            margin: auto;
+            font-size: 15px;
+        }
+
+            #tableBuildUpgraderResults td {
+                background-color: black;
+                color: white;
+                border: 1px solid;
+                padding: 5px;
+            }
+
+                #tableBuildUpgraderResults td.tdCpu {
+                    background-color: #003A00;
+                }
+
+                #tableBuildUpgraderResults td.tdramChannel {
+                    background-color: #54280B;
+                    text-align: center;
+                    padding: 0px 12px 0px 12px;
+                }
+
+                #tableBuildUpgraderResults td.tdRamSpeed {
+                    background-color: #54280B;
+                    text-align: center;
+                }
+
+                #tableBuildUpgraderResults td.tdRamPart {
+                    background-color: #54280B;
+                }
+
+                #tableBuildUpgraderResults td.tdGpuCount {
+                    background-color: #00003F;
+                    text-align: center;
+                    padding: 0px 12px 0px 12px;
+                }
+
+                #tableBuildUpgraderResults td.tdGpuType {
+                    background-color: #00003F;
+                    text-align: center;
+                }
+
+                #tableBuildUpgraderResults td.tdGpuPart {
+                    background-color: #00003F;
+                }
+
+                #tableBuildUpgraderResults td.tdMobo {
+                    background-color: #4C0000
+                }
+
+                #tableBuildUpgraderResults td.tdPrice {
+                    background-color: #004C00;
+                    text-align: center;
+                }
+
+                #tableBuildUpgraderResults td.tdScore {
+                    background-color: #442266;
+                    text-align: center;
+                }
+
+                #tableBuildUpgraderResults td.tdOther {
+                    background-color: black;
+                    text-align: center;
+                }
+
+        #divPartReplacerForm {
+            background-color: #000066;
+            color: white;
+            margin: auto;
+            width: 600px;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+        }
+
+        #tablePartReplacerResults {
+            border: none;
+            padding: 8px;
+            border-collapse: collapse;
+            margin: auto;
+            font-size: 15px;
+        }
+
+            #tablePartReplacerResults td {
+                background-color: black;
+                color: white;
+                border: 1px solid;
+                padding: 5px;
+            }
+
+                #tablePartReplacerResults td.tdCpu {
+                    background-color: #003A00;
+                }
+
+                #tablePartReplacerResults td.tdGpu1Type {
+                    background-color: #00003F;
+                    text-align: center;
+                }
+
+                #tablePartReplacerResults td.tdGpu1Part {
+                    background-color: #00003F;
+                }
+
+                #tablePartReplacerResults td.tdGpu2Type {
+                    background-color: #00003F;
+                    text-align: center;
+                }
+
+                #tablePartReplacerResults td.tdGpu2Part {
+                    background-color: #00003F;
+                }
+
+                #tablePartReplacerResults td.tdMobo {
+                    background-color: #4C0000
+                }
+
+                #tablePartReplacerResults td.tdPrice {
+                    background-color: #004C00;
+                    text-align: center;
+                }
+
+                #tablePartReplacerResults td.tdOther {
+                    background-color: black;
+                    text-align: center;
+                }
+
+        #div3DMarkScoreCalculatorHistory {
+            color: white;
+            background-color: black;
+        }
+
+        #table3DMarkScoreCalculatorHistory {
+            border: none;
+            padding: 8px;
+            border-collapse: collapse;
+            margin: auto;
+            font-size: 15px;
+        }
+
+            #table3DMarkScoreCalculatorHistory td {
+                background-color: #1E5078;
+                color: white;
+                border: 1px solid;
+                padding: 6px;
+            }
+
+                #table3DMarkScoreCalculatorHistory td.tdCpu {
+                    background-color: #003A00;
+                }
+
+                #table3DMarkScoreCalculatorHistory td.tdramChannel {
+                    background-color: #54280B;
+                    text-align: center;
+                    padding: 0px 12px 0px 12px;
+                }
+
+                #table3DMarkScoreCalculatorHistory td.tdRamSpeed {
+                    background-color: #54280B;
+                    text-align: center;
+                }
+
+                #table3DMarkScoreCalculatorHistory td.tdRamPart {
+                    background-color: #54280B;
+                }
+
+                #table3DMarkScoreCalculatorHistory td.tdGpuCount {
+                    background-color: #00003F;
+                    text-align: center;
+                    padding: 0px 12px 0px 12px;
+                }
+
+                #table3DMarkScoreCalculatorHistory td.tdGpuType {
+                    background-color: #00003F;
+                    text-align: center;
+                }
+
+                #table3DMarkScoreCalculatorHistory td.tdGpuPart {
+                    background-color: #00003F;
+                }
+
+                #table3DMarkScoreCalculatorHistory td.tdMobo {
+                    background-color: #4C0000
+                }
+
+                #table3DMarkScoreCalculatorHistory td.tdPrice {
+                    background-color: #004C00;
+                    text-align: center;
+                }
+
+                #table3DMarkScoreCalculatorHistory td.tdScore {
+                    background-color: #442266;
+                    text-align: center;
+                }
+
+                #table3DMarkScoreCalculatorHistory td.tdOther {
+                    background-color: black;
+                    text-align: center;
+                }
+
+        #divBuildMakerSaves {
+            color: white;
+            background-color: black;
+        }
+
+        #tableBuildMakerSaves {
+            border: none;
+            padding: 8px;
+            border-collapse: collapse;
+            margin: auto;
+            font-size: 15px;
+        }
+
+            #tableBuildMakerSaves td {
+                background-color: #1E5078;
+                color: white;
+                border: 1px solid;
+                padding: 6px;
+            }
+
+                #tableBuildMakerSaves td.tdCase {
+                    background-color: #450045;
+                }
+
+                #tableBuildMakerSaves td.tdCpu {
+                    background-color: #003A00;
+                }
+
+                #tableBuildMakerSaves td.tdramChannel {
+                    background-color: #54280B;
+                    text-align: center;
+                    padding: 0px 12px 0px 12px;
+                }
+
+                #tableBuildMakerSaves td.tdRamSpeed {
+                    background-color: #54280B;
+                    text-align: center;
+                }
+
+                #tableBuildMakerSaves td.tdRamPart {
+                    background-color: #54280B;
+                }
+
+                #tableBuildMakerSaves td.tdGpuCount {
+                    background-color: #00003F;
+                    text-align: center;
+                    padding: 0px 12px 0px 12px;
+                }
+
+                #tableBuildMakerSaves td.tdGpuType {
+                    background-color: #00003F;
+                    text-align: center;
+                }
+
+                #tableBuildMakerSaves td.tdGpuPart {
+                    background-color: #00003F;
+                }
+
+                #tableBuildMakerSaves td.tdMobo {
+                    background-color: #4C0000
+                }
+
+                #tableBuildMakerSaves td.tdPrice {
+                    background-color: #004C00;
+                    text-align: center;
+                }
+
+                #tableBuildMakerSaves td.tdScore {
+                    background-color: #442266;
+                    text-align: center;
+                }
+
+                #tableBuildMakerSaves td.tdOther {
+                    background-color: black;
+                    text-align: center;
+                }
