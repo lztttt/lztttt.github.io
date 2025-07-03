@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FRP TCP连接状态监控</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3a56d4;
+            --secondary: #4cc9f0;
+            --success: #38b000;
+            --warning: #ff9e00;
+            --danger: #e5383b;
+            --dark: #1d3557;
+            --light: #f8f9fa;
+            --gray: #6c757d;
+            --border: #e0e0e0;
+            --card-bg: #ffffff;
+            --body-bg: #f5f7ff;
+            --header-gradient: linear-gradient(135deg, #4361ee, #3a0ca3);
+        }
+        
+        body {
+            background-color: var(--body-bg);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding-bottom: 30px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* 头部样式 */
+        header {
+            background: var(--header-gradient);
+            color: white;
+            padding: 20px 0;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo-icon {
+            background-color: rgba(255,255,255,0.2);
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+        }
+        
+        .logo-text h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+        
+        .logo-text p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-top: 2px;
+        }
+        
+        .api-info {
+            background: rgba(255,255,255,0.15);
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-family: 'Courier New', monospace;
+            max-width: 400px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        
+        /* 状态卡片 */
+        .status-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            padding: 25px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 25px rgba(0,0,0,0.1);
+        }
+        
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+        }
+        
+        .card.online::before {
+            background-color: var(--success);
+        }
+        
+        .card.offline::before {
+            background-color: var(--danger);
+        }
+        
+        .card.total::before {
+            background-color: var(--primary);
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .card-title {
+            font-size: 1.1rem;
+            color: var(--gray);
+            font-weight: 500;
+        }
+        
+        .card-icon {
+            width: 46px;
+            height: 46px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+        }
+        
+        .card-icon.online {
+            background-color: rgba(56, 176, 0, 0.15);
+            color: var(--success);
+        }
+        
+        .card-icon.offline {
+            background-color: rgba(229, 56, 59, 0.15);
+            color: var(--danger);
+        }
+        
+        .card-icon.total {
+            background-color: rgba(67, 97, 238, 0.15);
+            color: var(--primary);
+        }
+        
+        .card-value {
+            font-size: 2.4rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+            color: var(--dark);
+        }
+        
+        .card-description {
+            font-size: 0.95rem;
+            color: var(--gray);
+        }
+        
+        /* 控制面板 */
+        .control-panel {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .refresh-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background-color 0.3s;
+            font-weight: 500;
+        }
+        
+        .refresh-btn:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .auto-refresh {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(67, 97, 238, 0.1);
+            padding: 8px 15px;
+            border-radius: 8px;
+        }
+        
+        .auto-refresh select {
+            padding: 8px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            outline: none;
+            background: white;
+            font-size: 0.95rem;
+        }
+        
+        .search-box {
+            position: relative;
+            flex: 1;
+            max-width: 300px;
+            margin-left: auto;
+        }
+        
+        .search-box input {
+            padding: 10px 15px 10px 40px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            width: 100%;
+            outline: none;
+            font-size: 0.95rem;
+            transition: border-color 0.3s;
+        }
+        
+        .search-box input:focus {
+            border-color: var(--primary);
+        }
+        
+        .search-box i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+        }
+        
+        /* 表格样式 */
+        .table-container {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+            overflow-x: auto;
+        }
+        
+        .connections-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 800px;
+        }
+        
+        .connections-table th {
+            background-color: var(--primary);
+            color: white;
+            text-align: left;
+            padding: 16px 20px;
+            font-weight: 500;
+        }
+        
+        .connections-table th:first-child {
+            border-top-left-radius: 16px;
+        }
+        
+        .connections-table th:last-child {
+            border-top-right-radius: 16px;
+        }
+        
+        .connections-table td {
+            padding: 14px 20px;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .connections-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .connections-table tr:hover {
+            background-color: rgba(67, 97, 238, 0.03);
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            min-width: 70px;
+            text-align: center;
+        }
+        
+        .status-online {
+            background-color: rgba(56, 176, 0, 0.15);
+            color: var(--success);
+        }
+        
+        .status-offline {
+            background-color: rgba(229, 56, 59, 0.15);
+            color: var(--danger);
+        }
+        
+        .traffic-cell {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        
+        .traffic-in, .traffic-out {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.9rem;
+        }
+        
+        .traffic-in i {
+            color: var(--success);
+        }
+        
+        .traffic-out i {
+            color: var(--danger);
+        }
+        
+        /* 底部信息 */
+        .footer-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        .last-update {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .auth-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .auth-info i {
+            color: var(--success);
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+            
+            .api-info {
+                max-width: 100%;
+                width: 100%;
+            }
+            
+            .control-panel {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .search-box {
+                max-width: 100%;
+                margin-left: 0;
+            }
+            
+            .footer-info {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-network-wired"></i>
+                    </div>
+                    <div class="logo-text">
+                        <h1>FRP TCP 连接状态监控</h1>
+                        <p>实时监控所有TCP连接状态与流量</p>
+                    </div>
+                </div>
+                <div class="api-info">
+                    <!-- <i class="fas fa-link"></i> API端点: http://nat.lztt.xyz:48436/api/proxy/tcp -->
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="status-cards">
+            <div class="card online">
+                <div class="card-header">
+                    <div class="card-title">在线连接</div>
+                    <div class="card-icon online">
+                        <i class="fas fa-plug"></i>
+                    </div>
+                </div>
+                <div class="card-value" id="onlineCount">0</div>
+                <div class="card-description">当前活跃的 TCP 连接数</div>
+            </div>
+            
+            <div class="card offline">
+                <div class="card-header">
+                    <div class="card-title">离线连接</div>
+                    <div class="card-icon offline">
+                        <i class="fas fa-unlink"></i>
+                    </div>
+                </div>
+                <div class="card-value" id="offlineCount">0</div>
+                <div class="card-description">未激活或断开连接</div>
+            </div>
+            
+            <div class="card total">
+                <div class="card-header">
+                    <div class="card-title">总连接数</div>
+                    <div class="card-icon total">
+                        <i class="fas fa-list"></i>
+                    </div>
+                </div>
+                <div class="card-value" id="totalCount">0</div>
+                <div class="card-description">配置的所有 TCP 连接</div>
+            </div>
+        </div>
+
+        <div class="control-panel">
+            <button class="refresh-btn" id="refreshBtn">
+                <i class="fas fa-sync-alt"></i> 刷新数据
+            </button>
+            
+            <div class="auto-refresh">
+                <label>自动刷新:</label>
+                <select id="refreshInterval">
+                    <option value="0">关闭</option>
+                    <option value="5000">5秒</option>
+                    <option value="10000" selected>10秒</option>
+                    <option value="30000">30秒</option>
+                    <option value="60000">1分钟</option>
+                </select>
+            </div>
+            
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="搜索连接名称或地址...">
+            </div>
+        </div>
+
+        <div class="table-container">
+            <table class="connections-table">
+                <thead>
+                    <tr>
+                        <th>连接名称</th>
+                        <th>本地地址</th>
+                        <th>远程端口</th>
+                        <th>状态</th>
+                        <th>最后活动</th>
+                        <th>流量统计</th>
+                    </tr>
+                </thead>
+                <tbody id="connectionsBody">
+                    <tr>
+                        <td colspan="6" style="text-align: center; padding: 30px;">
+                            <i class="fas fa-spinner fa-spin"></i> 正在加载连接数据...
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="footer-info">
+            <div class="last-update">
+                <i class="fas fa-clock"></i> 最后更新时间: <span id="lastUpdate">--:--:--</span>
+            </div>
+            <div class="auth-info">
+                <!-- <i class="fas fa-lock"></i> 已通过认证访问API -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 配置信息 - 在此处设置API认证信息
+        const API_URL = 'http://nat.lztt.xyz:48436/api/proxy/tcp';
+        const USERNAME = 'admin'; // 替换为实际用户名
+        const PASSWORD = '6562528'; // 替换为实际密码
+        
+        // 获取DOM元素
+        const refreshBtn = document.getElementById('refreshBtn');
+        const refreshInterval = document.getElementById('refreshInterval');
+        const searchInput = document.getElementById('searchInput');
+        const onlineCount = document.getElementById('onlineCount');
+        const offlineCount = document.getElementById('offlineCount');
+        const totalCount = document.getElementById('totalCount');
+        const lastUpdate = document.getElementById('lastUpdate');
+        const connectionsBody = document.getElementById('connectionsBody');
+        
+        // 基本认证函数
+        function getBasicAuthHeader() {
+            const credentials = btoa(`${USERNAME}:${PASSWORD}`);
+            return {
+                'Authorization': `Basic ${credentials}`
+            };
+        }
+        
+        // 更新最后更新时间
+        function updateTimestamp() {
+            const now = new Date();
+            lastUpdate.textContent = 
+                now.toLocaleDateString('zh-CN') + ' ' + now.toLocaleTimeString('zh-CN');
+        }
+        
+        // 格式化字节大小
+        function formatBytes(bytes, decimals = 2) {
+            if (bytes === 0) return '0 Bytes';
+            
+            const k = 1024;
+            const dm = decimals < 0 ? 0 : decimals;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+            
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+        }
+        
+        // 从API获取数据
+        async function fetchData() {
+            try {
+                const response = await fetch(API_URL, {
+                    headers: getBasicAuthHeader()
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`API请求失败: ${response.status} ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                processData(data);
+                
+                // 添加旋转动画
+                refreshBtn.querySelector('i').classList.add('fa-spin');
+                setTimeout(() => {
+                    refreshBtn.querySelector('i').classList.remove('fa-spin');
+                }, 1000);
+                
+            } catch (error) {
+                console.error('获取数据时出错:', error);
+                connectionsBody.innerHTML = `
+                    <tr>
+                        <td colspan="6" style="text-align: center; padding: 30px; color: var(--danger);">
+                            <i class="fas fa-exclamation-triangle"></i> 错误: ${error.message}
+                        </td>
+                    </tr>
+                `;
+            }
+        }
+        
+        // 处理数据并更新UI
+        function processData(data) {
+            // 更新统计数据
+            const online = data.filter(conn => conn.status === 'online').length;
+            const offline = data.filter(conn => conn.status === 'offline').length;
+            
+            onlineCount.textContent = online;
+            offlineCount.textContent = offline;
+            totalCount.textContent = data.length;
+            
+            // 更新表格
+            updateTable(data);
+            
+            // 更新时间戳
+            updateTimestamp();
+        }
+        
+        // 更新表格数据
+        function updateTable(connections) {
+            connectionsBody.innerHTML = '';
+            
+            if (connections.length === 0) {
+                connectionsBody.innerHTML = `
+                    <tr>
+                        <td colspan="6" style="text-align: center; padding: 30px;">
+                            未找到任何连接配置
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            connections.forEach(conn => {
+                const row = document.createElement('tr');
+                
+                // 格式化最后活动时间
+                const lastActive = conn.lastActivity 
+                    ? new Date(conn.lastActivity).toLocaleString('zh-CN') 
+                    : '从未活动';
+                
+                row.innerHTML = `
+                    <td>${conn.name || '未命名'}</td>
+                    <td>${conn.localAddr || 'N/A'}</td>
+                    <td>${conn.remotePort || 'N/A'}</td>
+                    <td>
+                        <span class="status-badge ${conn.status === 'online' ? 'status-online' : 'status-offline'}">
+                            ${conn.status === 'online' ? '在线' : '离线'}
+                        </span>
+                    </td>
+                    <td>${lastActive}</td>
+                    <td class="traffic-cell">
+                        <div class="traffic-in">
+                            <i class="fas fa-arrow-down"></i> ${formatBytes(conn.trafficIn || 0)}
+                        </div>
+                        <div class="traffic-out">
+                            <i class="fas fa-arrow-up"></i> ${formatBytes(conn.trafficOut || 0)}
+                        </div>
+                    </td>
+                `;
+                
+                connectionsBody.appendChild(row);
+            });
+        }
+        
+        // 搜索功能
+        function searchConnections() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const rows = connectionsBody.querySelectorAll('tr');
+            
+            rows.forEach(row => {
+                const name = row.cells[0].textContent.toLowerCase();
+                const addr = row.cells[1].textContent.toLowerCase();
+                
+                if (name.includes(searchTerm) || addr.includes(searchTerm)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+        
+        // 自动刷新
+        let refreshIntervalId = null;
+        function setupAutoRefresh() {
+            const interval = parseInt(refreshInterval.value);
+            
+            if (refreshIntervalId) {
+                clearInterval(refreshIntervalId);
+            }
+            
+            if (interval > 0) {
+                refreshIntervalId = setInterval(fetchData, interval);
+            }
+        }
+        
+        // 事件监听器
+        refreshBtn.addEventListener('click', fetchData);
+        refreshInterval.addEventListener('change', setupAutoRefresh);
+        searchInput.addEventListener('input', searchConnections);
+        
+        // 页面加载时初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            updateTimestamp();
+            setupAutoRefresh();
+            fetchData();
+        });
+    </script>
+</body>
+</html>

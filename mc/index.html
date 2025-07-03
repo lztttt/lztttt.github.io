@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minecraft服务器状态</title>
+    <title>Minecraft服务器监控</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -33,14 +33,12 @@
             color: var(--vscode-foreground);
             line-height: 1.6;
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
             overflow-x: hidden;
             padding: 20px;
         }
         
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             width: 100%;
         }
@@ -70,34 +68,39 @@
             color: var(--vscode-accent);
         }
         
-        .back-btn {
+        .controls {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 25px;
             background: rgba(78, 201, 176, 0.1);
             color: var(--vscode-accent);
             text-decoration: none;
-            padding: 10px 20px;
             border-radius: 5px;
             border: 1px solid var(--vscode-accent);
             font-weight: 500;
             transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            cursor: pointer;
+            font-size: 1rem;
         }
         
-        .back-btn:hover {
+        .btn:hover {
             background: rgba(78, 201, 176, 0.3);
+        }
+        
+        .btn i {
+            font-size: 1.1rem;
         }
         
         .main-content {
             display: grid;
             grid-template-columns: 1fr;
             gap: 30px;
-        }
-        
-        @media (min-width: 900px) {
-            .main-content {
-                grid-template-columns: 1fr 1fr;
-            }
         }
         
         .section {
@@ -118,102 +121,127 @@
             gap: 12px;
         }
         
-        .input-group {
-            margin-bottom: 25px;
+        .servers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
         }
         
-        .input-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-            color: var(--vscode-accent);
-        }
-        
-        .input-group input {
-            width: 100%;
-            padding: 12px 15px;
+        .server-card {
             background: var(--vscode-background);
             border: 1px solid var(--vscode-border);
-            border-radius: 5px;
-            color: var(--vscode-foreground);
-            font-size: 1rem;
-        }
-        
-        .btn {
-            display: inline-block;
-            padding: 12px 25px;
-            background: rgba(78, 201, 176, 0.1);
-            color: var(--vscode-accent);
-            text-decoration: none;
-            border-radius: 5px;
-            border: 1px solid var(--vscode-accent);
-            font-weight: 500;
+            border-radius: 8px;
+            padding: 20px;
             transition: all 0.3s ease;
-            cursor: pointer;
-            font-size: 1rem;
-            width: 100%;
+            position: relative;
+            overflow: hidden;
         }
         
-        .btn:hover {
-            background: rgba(78, 201, 176, 0.3);
+        .server-card.online {
+            border-left: 4px solid var(--online);
         }
         
-        .server-info {
-            margin-top: 25px;
+        .server-card.offline {
+            border-left: 4px solid var(--offline);
         }
         
-        .status-indicator {
+        .server-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .server-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .server-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--vscode-accent);
             display: flex;
             align-items: center;
             gap: 10px;
-            margin-bottom: 20px;
+        }
+        
+        .server-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
         }
         
         .status-dot {
-            width: 15px;
-            height: 15px;
+            width: 12px;
+            height: 12px;
             border-radius: 50%;
             background: var(--offline);
         }
         
         .status-dot.online {
             background: var(--online);
+            animation: pulse 1.5s infinite;
         }
         
-        .server-details {
-            background: var(--vscode-background);
-            border-radius: 5px;
-            padding: 20px;
+        @keyframes pulse {
+            0% { opacity: 0.7; }
+            50% { opacity: 1; }
+            100% { opacity: 0.7; }
         }
         
-        .info-row {
-            display: flex;
+        .server-address {
+            font-size: 0.9rem;
+            color: #a0a0a0;
             margin-bottom: 15px;
-            padding-bottom: 15px;
-            border-bottom: 1px dashed var(--vscode-border);
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
         
-        .info-row:last-child {
-            margin-bottom: 0;
-            padding-bottom: 0;
-            border-bottom: none;
+        .server-info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .info-box {
+            background: rgba(60, 60, 60, 0.5);
+            border-radius: 5px;
+            padding: 12px;
         }
         
         .info-label {
-            width: 150px;
+            font-size: 0.85rem;
+            color: #a0a0a0;
+            margin-bottom: 5px;
+        }
+        
+        .info-value {
+            font-size: 1.1rem;
             font-weight: 500;
             color: var(--vscode-accent);
         }
         
-        .info-value {
-            flex: 1;
+        .players-container {
+            margin-top: 15px;
+        }
+        
+        .players-title {
+            font-size: 0.9rem;
+            color: var(--vscode-accent);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
         
         .player-list {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 10px;
+            gap: 8px;
         }
         
         .player {
@@ -221,17 +249,66 @@
             padding: 5px 10px;
             border-radius: 4px;
             border: 1px solid rgba(78, 201, 176, 0.3);
+            font-size: 0.85rem;
+        }
+        
+        .server-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px dashed var(--vscode-border);
+        }
+        
+        .refresh-btn {
+            background: transparent;
+            border: none;
+            color: var(--vscode-accent);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
             font-size: 0.9rem;
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+        
+        .refresh-btn:hover {
+            background: rgba(78, 201, 176, 0.1);
+        }
+        
+        .connect-btn {
+            background: rgba(78, 201, 176, 0.1);
+            color: var(--vscode-accent);
+            border: 1px solid var(--vscode-accent);
+            border-radius: 4px;
+            padding: 5px 15px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+        
+        .connect-btn:hover {
+            background: rgba(78, 201, 176, 0.3);
+        }
+        
+        .last-updated {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 0.75rem;
+            color: #a0a0a0;
         }
         
         .loader {
             border: 4px solid rgba(255, 255, 255, 0.3);
             border-radius: 50%;
             border-top: 4px solid var(--vscode-accent);
-            width: 40px;
-            height: 40px;
+            width: 30px;
+            height: 30px;
             animation: spin 1s linear infinite;
-            margin: 20px auto;
+            margin: 10px auto;
             display: none;
         }
         
@@ -240,44 +317,16 @@
             100% { transform: rotate(360deg); }
         }
         
-        .error-message {
-            color: var(--offline);
-            background: rgba(244, 125, 125, 0.1);
-            padding: 15px;
-            border-radius: 5px;
-            border: 1px solid var(--offline);
-            margin-top: 20px;
-            display: none;
-        }
-        
-        .example-servers {
-            margin-top: 20px;
-        }
-        
-        .example-title {
-            font-size: 1rem;
-            color: var(--vscode-accent);
-            margin-bottom: 10px;
-        }
-        
-        .examples {
+        .global-refresh {
             display: flex;
-            flex-wrap: wrap;
+            align-items: center;
             gap: 10px;
+            margin-top: 20px;
         }
         
-        .example {
-            background: rgba(78, 201, 176, 0.1);
-            color: var(--vscode-accent);
-            padding: 5px 10px;
-            border-radius: 4px;
-            border: 1px solid rgba(78, 201, 176, 0.3);
+        .refresh-text {
             font-size: 0.9rem;
-            cursor: pointer;
-        }
-        
-        .example:hover {
-            background: rgba(78, 201, 176, 0.3);
+            color: #a0a0a0;
         }
         
         .footer {
@@ -301,21 +350,6 @@
             color: var(--vscode-accent);
         }
         
-        .theme-toggle {
-            background: transparent;
-            border: 1px solid var(--vscode-border);
-            color: var(--vscode-foreground);
-            padding: 8px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .theme-toggle:hover {
-            border-color: var(--vscode-accent);
-            color: var(--vscode-accent);
-        }
-        
         /* 响应式设计 */
         @media (max-width: 768px) {
             header {
@@ -327,6 +361,15 @@
             .logo {
                 justify-content: center;
             }
+            
+            .controls {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .servers-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -335,79 +378,34 @@
         <header>
             <div class="logo">
                 <i class="fas fa-server"></i>
-                <h1>Minecraft服务器状态查询</h1>
+                <h1>Minecraft服务器监控</h1>
             </div>
-            <a href="index.html" class="back-btn">
-                <i class="fas fa-arrow-left"></i> 返回工具箱
-            </a>
+            <div class="controls">
+                <!-- <button class="btn" id="add-server-btn">
+                    <i class="fas fa-plus"></i> 添加服务器
+                </button> -->
+                <button class="btn" id="refresh-all-btn">
+                    <i class="fas fa-sync-alt"></i> 刷新所有服务器
+                </button>
+                <!-- <a href="index.html" class="btn">
+                    <i class="fas fa-arrow-left"></i> 返回工具箱
+                </a> -->
+            </div>
         </header>
         
         <div class="main-content">
             <div class="section">
                 <h2 class="section-title">
-                    <i class="fas fa-search"></i> 服务器查询
+                    <i class="fas fa-network-wired"></i> 服务器状态监控
+                    <span class="refresh-text">最后更新: <span id="last-refresh">-</span></span>
                 </h2>
                 
-                <div class="input-group">
-                    <label for="server-address">服务器地址</label>
-                    <input type="text" id="server-address" placeholder="例如：mc.hypixel.net 或 192.168.1.100:25565">
+                <div class="servers-grid" id="servers-container">
+                    <!-- 服务器卡片将由JS动态生成 -->
                 </div>
                 
-                <button id="query-btn" class="btn">
-                    <i class="fas fa-wifi"></i> 查询服务器状态
-                </button>
-                
-                <div class="example-servers">
-                    <div class="example-title">服务器：</div>
-                    <div class="examples">
-                        <div class="example" data-address="222.186.21.30:38402">server1: 222.186.21.30:38402</div>
-                        <div class="example" data-address="mc.hypixel.net">lzt_1</div>
-                    </div>
-                </div>
-                
-                <div class="loader" id="loader"></div>
-                <div class="error-message" id="error-message"></div>
-            </div>
-            
-            <div class="section">
-                <h2 class="section-title">
-                    <i class="fas fa-info-circle"></i> 服务器信息
-                </h2>
-                
-                <div id="server-info">
-                    <div class="server-info">
-                        <div class="status-indicator">
-                            <div class="status-dot"></div>
-                            <div class="status-text">服务器状态：离线</div>
-                        </div>
-                        
-                        <div class="server-details">
-                            <div class="info-row">
-                                <div class="info-label">服务器地址：</div>
-                                <div class="info-value" id="info-address">-</div>
-                            </div>
-                            <div class="info-row">
-                                <div class="info-label">服务器版本：</div>
-                                <div class="info-value" id="info-version">-</div>
-                            </div>
-                            <div class="info-row">
-                                <div class="info-label">在线玩家：</div>
-                                <div class="info-value" id="info-players">-</div>
-                            </div>
-                            <div class="info-row">
-                                <div class="info-label">延迟：</div>
-                                <div class="info-value" id="info-ping">-</div>
-                            </div>
-                            <div class="info-row">
-                                <div class="info-label">MOTD：</div>
-                                <div class="info-value" id="info-motd">-</div>
-                            </div>
-                            <div class="info-row">
-                                <div class="info-label">在线玩家列表：</div>
-                                <div class="info-value" id="info-playerlist">-</div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="global-refresh">
+                    <div class="loader" id="global-loader"></div>
                 </div>
             </div>
         </div>
@@ -415,7 +413,7 @@
         <div class="footer">
             <div class="footer-info">
                 <p><strong>提示：</strong> 此工具使用第三方API查询Minecraft服务器信息</p>
-                <p><strong>注意：</strong> 某些服务器可能阻止状态查询请求</p>
+                <!-- <p><strong>注意：</strong> 某些服务器可能阻止状态查询请求</p> -->
             </div>
             
             <div class="footer-info">
@@ -426,6 +424,12 @@
     </div>
     
     <script>
+        // 预设的服务器列表
+        const presetServers = [
+            { name: "lztt0", address: "222.186.21.30:38402", icon: "fa-crown" },
+            { name: "lztt1", address: "nat.lztt.xyz:37062", icon: "fa-cube" },
+        ];
+        
         // 获取并显示IP地址和时间
         fetch('https://api.ipify.org?format=json')
             .then(response => response.json())
@@ -445,117 +449,204 @@
         updateTime();
         setInterval(updateTime, 1000);
         
-        // Minecraft服务器查询功能
-        const queryBtn = document.getElementById('query-btn');
-        const serverAddress = document.getElementById('server-address');
-        const loader = document.getElementById('loader');
-        const errorMessage = document.getElementById('error-message');
+        // 更新最后刷新时间
+        function updateRefreshTime() {
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString();
+            document.getElementById('last-refresh').textContent = timeStr;
+        }
         
-        // 更新服务器信息显示
-        function updateServerInfo(data) {
-            const statusDot = document.querySelector('.status-dot');
-            const statusText = document.querySelector('.status-text');
+        // 渲染服务器卡片
+        function renderServerCards() {
+            const container = document.getElementById('servers-container');
+            container.innerHTML = '';
+            
+            presetServers.forEach((server, index) => {
+                const card = document.createElement('div');
+                card.className = 'server-card';
+                card.id = `server-card-${index}`;
+                card.innerHTML = `
+                    <div class="last-updated">最后更新: -</div>
+                    <div class="server-header">
+                        <div class="server-name">
+                            <i class="fas ${server.icon}"></i>
+                            ${server.name}
+                        </div>
+                        <div class="server-status">
+                            <div class="status-dot"></div>
+                            <span>离线</span>
+                        </div>
+                    </div>
+                    <div class="server-address">
+                        <i class="fas fa-link"></i>
+                        ${server.address}
+                    </div>
+                    <div class="server-info-grid">
+                        <div class="info-box">
+                            <div class="info-label">版本</div>
+                            <div class="info-value" id="version-${index}">-</div>
+                        </div>
+                        <div class="info-box">
+                            <div class="info-label">延迟</div>
+                            <div class="info-value" id="ping-${index}">-</div>
+                        </div>
+                        <div class="info-box">
+                            <div class="info-label">在线玩家</div>
+                            <div class="info-value" id="players-${index}">-</div>
+                        </div>
+                        <div class="info-box">
+                            <div class="info-label">最大玩家</div>
+                            <div class="info-value" id="max-players-${index}">-</div>
+                        </div>
+                    </div>
+                    <div class="players-container">
+                        <div class="players-title">
+                            <i class="fas fa-users"></i>
+                            在线玩家
+                        </div>
+                        <div class="player-list" id="player-list-${index}">
+                            <div class="player">暂无玩家在线</div>
+                        </div>
+                    </div>
+                    <div class="server-actions">
+                        <button class="refresh-btn" data-id="${index}">
+                            <i class="fas fa-sync-alt"></i> 刷新
+                        </button>
+                        <!-- <a href="#" class="connect-btn">
+                            <i class="fas fa-plug"></i> 连接
+                        </a> -->
+                    </div>
+                    <div class="loader" id="loader-${index}" style="display: none;"></div>
+                `;
+                container.appendChild(card);
+            });
+        }
+        
+        // 更新服务器卡片状态
+        function updateServerCard(index, data) {
+            const card = document.getElementById(`server-card-${index}`);
+            const statusDot = card.querySelector('.status-dot');
+            const statusText = card.querySelector('.server-status span');
+            const lastUpdated = card.querySelector('.last-updated');
+            const now = new Date();
+            
+            lastUpdated.textContent = `最后更新: ${now.toLocaleTimeString()}`;
             
             if (data.online) {
+                card.classList.add('online');
+                card.classList.remove('offline');
                 statusDot.classList.add('online');
-                statusText.textContent = '服务器状态：在线';
+                statusText.textContent = '在线';
                 statusText.style.color = 'var(--online)';
                 
-                document.getElementById('info-address').textContent = data.host;
-                document.getElementById('info-version').textContent = data.version || '未知';
-                document.getElementById('info-players').textContent = `${data.players.online}/${data.players.max}`;
-                document.getElementById('info-ping').textContent = `${data.roundTripLatency}ms`;
-                document.getElementById('info-motd').textContent = data.motd ? data.motd.clean : '无';
+                document.getElementById(`version-${index}`).textContent = data.version || '未知';
+                document.getElementById(`ping-${index}`).textContent = `${data.roundTripLatency}ms`;
+                document.getElementById(`players-${index}`).textContent = data.players.online;
+                document.getElementById(`max-players-${index}`).textContent = data.players.max;
                 
-                // 玩家列表
-                const playerList = document.getElementById('info-playerlist');
+                // 更新玩家列表
+                const playerList = document.getElementById(`player-list-${index}`);
+                playerList.innerHTML = '';
+                
                 if (data.players.list && data.players.list.length > 0) {
-                    playerList.innerHTML = '<div class="player-list"></div>';
-                    const playerListContainer = playerList.querySelector('.player-list');
-                    
-                    data.players.list.forEach(player => {
+                    data.players.list.slice(0, 8).forEach(player => {
                         const playerElement = document.createElement('div');
                         playerElement.className = 'player';
                         playerElement.textContent = player.name_clean;
-                        playerListContainer.appendChild(playerElement);
+                        playerList.appendChild(playerElement);
                     });
+                    
+                    if (data.players.online > 8) {
+                        const moreElement = document.createElement('div');
+                        moreElement.className = 'player';
+                        moreElement.textContent = `+${data.players.online - 8} 更多`;
+                        playerList.appendChild(moreElement);
+                    }
                 } else {
-                    playerList.textContent = '无玩家在线或未公开玩家列表';
+                    playerList.innerHTML = '<div class="player">暂无玩家在线</div>';
                 }
             } else {
+                card.classList.add('offline');
+                card.classList.remove('online');
                 statusDot.classList.remove('online');
-                statusText.textContent = '服务器状态：离线';
+                statusText.textContent = '离线';
                 statusText.style.color = 'var(--offline)';
                 
-                document.getElementById('info-address').textContent = serverAddress.value;
-                document.getElementById('info-version').textContent = '-';
-                document.getElementById('info-players').textContent = '-';
-                document.getElementById('info-ping').textContent = '-';
-                document.getElementById('info-motd').textContent = '-';
-                document.getElementById('info-playerlist').textContent = '-';
+                document.getElementById(`version-${index}`).textContent = '-';
+                document.getElementById(`ping-${index}`).textContent = '-';
+                document.getElementById(`players-${index}`).textContent = '-';
+                document.getElementById(`max-players-${index}`).textContent = '-';
+                document.getElementById(`player-list-${index}`).innerHTML = '<div class="player">服务器离线</div>';
             }
         }
         
-        // 查询服务器状态
-        function queryServerStatus() {
-            const address = serverAddress.value.trim();
-            if (!address) {
-                showError('请输入服务器地址');
-                return;
-            }
+        // 查询单个服务器状态
+        function queryServerStatus(index) {
+            const server = presetServers[index];
+            const loader = document.getElementById(`loader-${index}`);
             
-            // 显示加载动画
             loader.style.display = 'block';
-            errorMessage.style.display = 'none';
             
-            // 使用第三方API查询Minecraft服务器状态
-            fetch(`https://api.mcsrvstat.us/2/${address}`)
+            fetch(`https://api.mcsrvstat.us/2/${server.address}`)
                 .then(response => response.json())
                 .then(data => {
                     loader.style.display = 'none';
-                    if (data.online) {
-                        updateServerInfo(data);
-                    } else {
-                        showError('无法连接到服务器或服务器离线');
-                        updateServerInfo({ online: false });
-                    }
+                    updateServerCard(index, data);
                 })
                 .catch(error => {
                     loader.style.display = 'none';
-                    showError(`查询失败: ${error.message}`);
-                    console.error('Error:', error);
+                    console.error(`查询服务器 ${server.name} 失败:`, error);
                 });
         }
         
-        // 显示错误信息
-        function showError(message) {
-            errorMessage.textContent = message;
-            errorMessage.style.display = 'block';
+        // 查询所有服务器状态
+        function queryAllServers() {
+            const globalLoader = document.getElementById('global-loader');
+            globalLoader.style.display = 'block';
+            updateRefreshTime();
+            
+            const promises = presetServers.map((server, index) => {
+                return fetch(`https://api.mcsrvstat.us/2/${server.address}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        updateServerCard(index, data);
+                    })
+                    .catch(error => {
+                        console.error(`查询服务器 ${server.name} 失败:`, error);
+                    });
+            });
+            
+            Promise.all(promises).then(() => {
+                globalLoader.style.display = 'none';
+            });
         }
         
-        // 绑定查询按钮事件
-        queryBtn.addEventListener('click', queryServerStatus);
+        // 添加服务器
         
-        // 按Enter键查询
-        serverAddress.addEventListener('keyup', (e) => {
-            if (e.key === 'Enter') {
-                queryServerStatus();
-            }
-        });
         
-        // 示例服务器点击事件
-        document.querySelectorAll('.example').forEach(example => {
-            example.addEventListener('click', () => {
-                serverAddress.value = example.getAttribute('data-address');
-                queryServerStatus();
+        // 初始化页面
+        document.addEventListener('DOMContentLoaded', () => {
+            // 渲染初始服务器卡片
+            renderServerCards();
+            
+            // 查询所有服务器状态
+            queryAllServers();
+            
+            // 绑定刷新所有按钮事件
+            document.getElementById('refresh-all-btn').addEventListener('click', queryAllServers);
+            
+            // 绑定添加服务器按钮事件
+            document.getElementById('add-server-btn').addEventListener('click', addServer);
+            
+            // 绑定单个服务器刷新按钮事件
+            document.addEventListener('click', (e) => {
+                if (e.target.classList.contains('refresh-btn')) {
+                    const index = e.target.getAttribute('data-id');
+                    queryServerStatus(index);
+                }
             });
+       
         });
-        
-        // 初始查询一个示例服务器
-        setTimeout(() => {
-            serverAddress.value = 'mc.hypixel.net';
-            queryServerStatus();
-        }, 500);
     </script>
 </body>
 </html>
