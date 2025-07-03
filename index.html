@@ -1,377 +1,378 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Index page</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Index page</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <style>
-    :root {
-        --vscode-background: #1e1e1e;
-        --vscode-foreground: #d4d4d4;
-        --vscode-accent: #4ec9b0;
-        --vscode-accent-dark: #379683;
-        --vscode-border: #3c3c3c;
-        --vscode-highlight: #2d2d2d;
-        --vscode-header: #007acc;
-        --vscode-sidebar: #252526;
-        --vscode-scrollbar: #3c3c3c;
-    }
-    
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-    
-    body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        background: var(--vscode-background);
-        color: var(--vscode-foreground);
-        line-height: 1.6;
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-        overflow-x: hidden;
-    }
-    
+  :root {
+    --vscode-background: #1e1e1e;
+    --vscode-foreground: #d4d4d4;
+    --vscode-accent: #4ec9b0;
+    --vscode-accent-dark: #379683;
+    --vscode-border: #3c3c3c;
+    --vscode-highlight: #2d2d2d;
+    --vscode-header: #007acc;
+    --vscode-sidebar: #252526;
+    --vscode-scrollbar: #3c3c3c;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--vscode-background);
+    color: var(--vscode-foreground);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    display: flex;
+    flex: 1;
+    width: 100%;
+  }
+
+  /* Sidebar styling */
+  .sidebar {
+    background: var(--vscode-sidebar);
+    width: 250px;
+    padding: 30px 15px;
+    border-right: 1px solid var(--vscode-border);
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+  }
+
+  .sidebar-header {
+    padding: 0 10px 20px;
+    border-bottom: 1px solid var(--vscode-border);
+    margin-bottom: 25px;
+  }
+
+  .sidebar-header h1 {
+    font-size: 1.5rem;
+    color: var(--vscode-accent);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .sidebar-header h1 i {
+    color: var(--vscode-header);
+  }
+
+  .sidebar-info {
+    background: rgba(60, 60, 60, 0.5);
+    border-radius: 5px;
+    padding: 15px;
+    margin-top: 20px;
+    font-size: 0.9rem;
+  }
+
+  .sidebar-info p {
+    margin-bottom: 8px;
+  }
+
+  /* Main content styling */
+  .main-content {
+    flex: 1;
+    padding: 30px 40px;
+  }
+
+  .section {
+    margin-bottom: 40px;
+  }
+
+  .section-title {
+    font-size: 1.8rem;
+    color: var(--vscode-accent);
+    margin-bottom: 25px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--vscode-border);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .tools-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+  }
+
+  .tool-card {
+    background: rgba(37, 37, 38, 0.7);
+    border: 1px solid var(--vscode-border);
+    border-radius: 8px;
+    padding: 25px;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .tool-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--vscode-accent);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  .tool-card i {
+    font-size: 2.5rem;
+    color: var(--vscode-accent);
+    margin-bottom: 15px;
+  }
+
+  .tool-card h3 {
+    font-size: 1.3rem;
+    margin-bottom: 12px;
+    color: var(--vscode-accent);
+  }
+
+  .tool-card p {
+    font-size: 0.95rem;
+    color: #a0a0a0;
+    flex-grow: 1;
+    margin-bottom: 20px;
+  }
+
+  .tool-link {
+    display: inline-block;
+    padding: 10px 20px;
+    background: rgba(78, 201, 176, 0.1);
+    color: var(--vscode-accent);
+    text-decoration: none;
+    border-radius: 5px;
+    border: 1px solid var(--vscode-accent);
+    font-weight: 500;
+    transition: all 0.3s ease;
+    width: 100%;
+    text-align: center;
+  }
+
+  .tool-link:hover {
+    background: rgba(78, 201, 176, 0.3);
+  }
+
+  /* Footer styling */
+  .footer {
+    background: var(--vscode-sidebar);
+    border-top: 1px solid var(--vscode-border);
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .footer-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 0.9rem;
+  }
+
+  .footer-info strong {
+    color: var(--vscode-accent);
+  }
+
+  .theme-toggle {
+    background: transparent;
+    border: 1px solid var(--vscode-border);
+    color: var(--vscode-foreground);
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .theme-toggle:hover {
+    border-color: var(--vscode-accent);
+    color: var(--vscode-accent);
+  }
+
+  /* Scrollbar styling */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--vscode-background);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--vscode-scrollbar);
+    border-radius: 5px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+
+  /* Responsive design */
+  @media (max-width: 900px) {
     .container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 20px;
-        display: flex;
-        flex: 1;
-        width: 100%;
+      flex-direction: column;
     }
-    
-    /* Sidebar styling */
+
     .sidebar {
-        background: var(--vscode-sidebar);
-        width: 250px;
-        padding: 30px 15px;
-        border-right: 1px solid var(--vscode-border);
-        position: sticky;
-        top: 0;
-        height: 100vh;
-        overflow-y: auto;
+      width: 100%;
+      height: auto;
+      position: relative;
+      padding: 20px;
     }
-    
-    .sidebar-header {
-        padding: 0 10px 20px;
-        border-bottom: 1px solid var(--vscode-border);
-        margin-bottom: 25px;
-    }
-    
-    .sidebar-header h1 {
-        font-size: 1.5rem;
-        color: var(--vscode-accent);
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-    
-    .sidebar-header h1 i {
-        color: var(--vscode-header);
-    }
-    
-    .sidebar-info {
-        background: rgba(60, 60, 60, 0.5);
-        border-radius: 5px;
-        padding: 15px;
-        margin-top: 20px;
-        font-size: 0.9rem;
-    }
-    
-    .sidebar-info p {
-        margin-bottom: 8px;
-    }
-    
-    /* Main content styling */
-    .main-content {
-        flex: 1;
-        padding: 30px 40px;
-    }
-    
-    .section {
-        margin-bottom: 40px;
-    }
-    
-    .section-title {
-        font-size: 1.8rem;
-        color: var(--vscode-accent);
-        margin-bottom: 25px;
-        padding-bottom: 10px;
-        border-bottom: 1px solid var(--vscode-border);
-        display: flex;
-        align-items: center;
-        gap: 12px;
-    }
-    
+
     .tools-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-        gap: 25px;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     }
-    
-    .tool-card {
-        background: rgba(37, 37, 38, 0.7);
-        border: 1px solid var(--vscode-border);
-        border-radius: 8px;
-        padding: 25px;
-        transition: all 0.3s ease;
-        display: flex;
-        flex-direction: column;
-        height: 100%;
+  }
+
+  @media (max-width: 600px) {
+    .tools-grid {
+      grid-template-columns: 1fr;
     }
-    
-    .tool-card:hover {
-        transform: translateY(-5px);
-        border-color: var(--vscode-accent);
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-    }
-    
-    .tool-card i {
-        font-size: 2.5rem;
-        color: var(--vscode-accent);
-        margin-bottom: 15px;
-    }
-    
-    .tool-card h3 {
-        font-size: 1.3rem;
-        margin-bottom: 12px;
-        color: var(--vscode-accent);
-    }
-    
-    .tool-card p {
-        font-size: 0.95rem;
-        color: #a0a0a0;
-        flex-grow: 1;
-        margin-bottom: 20px;
-    }
-    
-    .tool-link {
-        display: inline-block;
-        padding: 10px 20px;
-        background: rgba(78, 201, 176, 0.1);
-        color: var(--vscode-accent);
-        text-decoration: none;
-        border-radius: 5px;
-        border: 1px solid var(--vscode-accent);
-        font-weight: 500;
-        transition: all 0.3s ease;
-        width: 100%;
-        text-align: center;
-    }
-    
-    .tool-link:hover {
-        background: rgba(78, 201, 176, 0.3);
-    }
-    
-    /* Footer styling */
+
     .footer {
-        background: var(--vscode-sidebar);
-        border-top: 1px solid var(--vscode-border);
-        padding: 20px;
-        display: flex;
-        justify-content: space-between;
-        flex-wrap: wrap;
-        gap: 20px;
+      flex-direction: column;
+      gap: 15px;
     }
-    
-    .footer-info {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-        font-size: 0.9rem;
-    }
-    
-    .footer-info strong {
-        color: var(--vscode-accent);
-    }
-    
-    .theme-toggle {
-        background: transparent;
-        border: 1px solid var(--vscode-border);
-        color: var(--vscode-foreground);
-        padding: 8px 15px;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: all 0.3s;
-    }
-    
-    .theme-toggle:hover {
-        border-color: var(--vscode-accent);
-        color: var(--vscode-accent);
-    }
-    
-    /* Scrollbar styling */
-    ::-webkit-scrollbar {
-        width: 10px;
-    }
-    
-    ::-webkit-scrollbar-track {
-        background: var(--vscode-background);
-    }
-    
-    ::-webkit-scrollbar-thumb {
-        background: var(--vscode-scrollbar);
-        border-radius: 5px;
-    }
-    
-    ::-webkit-scrollbar-thumb:hover {
-        background: #555;
-    }
-    
-    /* Responsive design */
-    @media (max-width: 900px) {
-        .container {
-            flex-direction: column;
-        }
-        
-        .sidebar {
-            width: 100%;
-            height: auto;
-            position: relative;
-            padding: 20px;
-        }
-        
-        .tools-grid {
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-        }
-    }
-    
-    @media (max-width: 600px) {
-        .tools-grid {
-            grid-template-columns: 1fr;
-        }
-        
-        .footer {
-            flex-direction: column;
-            gap: 15px;
-        }
-    }
+  }
 </style>
+
 <body>
-    <div class="container">
-        <aside class="sidebar">
-            <div class="sidebar-header">
-                <h1><i class="fas fa-code"></i>快速链接</h1>
-            </div>
-            
-            <div class="sidebar-info">
-                <p><strong>版本:</strong> 1.2.0</p>
-                <p><strong>最后更新:</strong> 2025-07-03</p>
-            </div>
-            
-            <!-- <div class="sidebar-info">
+  <div class="container">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h1><i class="fas fa-code"></i>快速链接</h1>
+      </div>
+
+      <div class="sidebar-info">
+        <p><strong>版本:</strong> 1.2.0</p>
+        <p><strong>最后更新:</strong> 2025-07-03</p>
+      </div>
+
+      <!-- <div class="sidebar-info">
                 <p><strong>系统信息:</strong></p>
                 <p id="ip-info">IP: 加载中...</p>
                 <p id="time-info">时间: 加载中...</p>
                 <p id="ua-info">UA: 加载中...</p>
             </div> -->
-            
-            <!-- <div class="sidebar-info">
+
+      <!-- <div class="sidebar-info">
                 <p><strong>快捷键:</strong></p>
                 <p>Ctrl+F - 搜索工具</p>
                 <p>Ctrl+H - 查看历史</p>
                 <p>Ctrl+D - 深色模式</p>
             </div> -->
-        </aside>
-        
-        <main class="main-content">
-            <div class="section">
-                <h2 class="section-title"><i class="fas fa-tools"></i> 所有网页</h2>
-                <div class="tools-grid">
-                    <div class="tool-card">
-                        <i class="fas fa-microchip"></i>
-                        <h3>PCBS 工具</h3>
-                        <p>PC-Building-Simulator 3DMark 跑分计算器</p>
-                        <a href="pcbs/" class="tool-link">打开工具</a>
-                    </div>
-                    
-                    <div class="tool-card">
-                        <i class="fas fa-music"></i>
-                        <h3>音乐解锁</h3>
-                        <p>解锁受保护的音乐文件，支持多种格式转换，移除DRM限制。</p>
-                        <a href="music-unlock/" class="tool-link">打开工具</a>
-                    </div>
-                    
-                    <div class="tool-card">
-                        <i class="fas fa-spray-can"></i>
-                        <h3>起源引擎喷漆工具</h3>
-                        <p>创建和编辑起源引擎游戏中的自定义喷漆图案和纹理。</p>
-                        <a href="spray" class="tool-link">打开工具</a>
-                    </div>
-                    
-                    <div class="tool-card">
-                        <i class="fas fa-code"></i>
-                        <h3>文本编解码</h3>
-                        <p>支持多种编码格式的文本转换工具，包括Base64、URL编码等。</p>
-                        <a href="encoder/index.html" class="tool-link">打开工具</a>
-                    </div>
-                    
-                    <div class="tool-card">
-                        <i class="fas fa-keyboard"></i>
-                        <h3>ASCII码对照表</h3>
-                        <p>完整的ASCII字符集参考，包含十进制、十六进制和HTML实体表示。</p>
-                        <a href="ASCII/index.html" class="tool-link">打开工具</a>
-                    </div>
-                    
-                    <!-- <div class="tool-card">
+    </aside>
+
+    <main class="main-content">
+      <div class="section">
+        <h2 class="section-title"><i class="fas fa-tools"></i> 所有网页</h2>
+        <div class="tools-grid">
+          <div class="tool-card">
+            <i class="fas fa-microchip"></i>
+            <h3>PCBS 工具</h3>
+            <p>PC-Building-Simulator 3DMark 跑分计算器</p>
+            <a href="pcbs/" class="tool-link">打开工具</a>
+          </div>
+
+          <div class="tool-card">
+            <i class="fas fa-music"></i>
+            <h3>音乐解锁</h3>
+            <p>解锁受保护的音乐文件，支持多种格式转换，移除DRM限制。</p>
+            <a href="music-unlock/" class="tool-link">打开工具</a>
+          </div>
+
+          <div class="tool-card">
+            <i class="fas fa-spray-can"></i>
+            <h3>起源引擎喷漆工具</h3>
+            <p>创建和编辑起源引擎游戏中的自定义喷漆图案和纹理。</p>
+            <a href="spray" class="tool-link">打开工具</a>
+          </div>
+
+          <div class="tool-card">
+            <i class="fas fa-code"></i>
+            <h3>文本编解码</h3>
+            <p>支持多种编码格式的文本转换工具，包括Base64、URL编码等。</p>
+            <a href="encoder/index.html" class="tool-link">打开工具</a>
+          </div>
+
+          <div class="tool-card">
+            <i class="fas fa-keyboard"></i>
+            <h3>ASCII码对照表</h3>
+            <p>完整的ASCII字符集参考，包含十进制、十六进制和HTML实体表示。</p>
+            <a href="ASCII/index.html" class="tool-link">打开工具</a>
+          </div>
+
+          <!-- <div class="tool-card">
                         <i class="fas fa-cloud"></i>
                         <h3>Alist 网盘</h3>
                         <p>多功能云存储管理工具，支持多平台网盘聚合访问和管理。</p>
                         <a href="http://lzt1.ml" class="tool-link">访问网盘</a>
                     </div> -->
 
-                </div>
-            </div>
-        </main>
-    </div>
-    
-    <footer class="footer">
-        <div class="footer-info">
-            <p><strong>IP:</strong> <span id="ip">加载中...</span></p>
-            <p><strong>时间:</strong> <span id="time">加载中...</span></p>
-            <p><strong>UA:</strong> <span id="UA">加载中...</span></p>
         </div>
-        
-    </footer>
-    
-    <script>
-        // 获取并显示IP地址
-        fetch('https://api.ipify.org?format=json')
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('ip').textContent = data.ip;
-                document.getElementById('ip-info').innerHTML = `<strong>IP:</strong> ${data.ip}`;
-            })
-            .catch(() => {
-                document.getElementById('ip').textContent = '获取失败';
-                document.getElementById('ip-info').innerHTML = '<strong>IP:</strong> 获取失败';
-            });
-        
-        // 更新时间显示
-        function updateTime() {
-            const now = new Date();
-            const timeStr = now.toLocaleString();
-            document.getElementById('time').textContent = timeStr;
-            document.getElementById('time-info').innerHTML = `<strong>时间:</strong> ${timeStr}`;
-        }
-        
-        // 初始更新时间
-        updateTime();
-        // 每秒更新一次时间
-        setInterval(updateTime, 1000);
-        
-        // 显示UA信息
-        const ua = navigator.userAgent;
-        document.getElementById('UA').textContent = ua;
-        document.getElementById('ua-info').innerHTML = `<strong>UA:</strong> ${ua.substring(0, 50)}...`;
-        
-        setInterval(updateMemoryUsage, 3000);
-    </script>
+      </div>
+    </main>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-info">
+      <p><strong>IP:</strong> <span id="ip">加载中...</span></p>
+      <p><strong>时间:</strong> <span id="time">加载中...</span></p>
+      <p><strong>UA:</strong> <span id="UA">加载中...</span></p>
+    </div>
+
+  </footer>
+
+  <script>
+    // 获取并显示IP地址
+    fetch('https://api.ipify.org?format=json')
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById('ip').textContent = data.ip;
+        document.getElementById('ip-info').innerHTML = `<strong>IP:</strong> ${data.ip}`;
+      })
+      .catch(() => {
+        document.getElementById('ip').textContent = '获取失败';
+        document.getElementById('ip-info').innerHTML = '<strong>IP:</strong> 获取失败';
+      });
+
+    // 更新时间显示
+    function updateTime() {
+      const now = new Date();
+      const timeStr = now.toLocaleString();
+      document.getElementById('time').textContent = timeStr;
+      document.getElementById('time-info').innerHTML = `<strong>时间:</strong> ${timeStr}`;
+    }
+
+    // 初始更新时间
+    updateTime();
+    // 每秒更新一次时间
+    setInterval(updateTime, 1000);
+
+    // 显示UA信息
+    const ua = navigator.userAgent;
+    document.getElementById('UA').textContent = ua;
+    document.getElementById('ua-info').innerHTML = `<strong>UA:</strong> ${ua.substring(0, 50)}...`;
+  </script>
 </body>
-</html>s
+
+</html>
